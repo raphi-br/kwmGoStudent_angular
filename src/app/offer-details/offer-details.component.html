@@ -1,0 +1,71 @@
+<div class="ui grid" *ngIf="offer">
+  <div class="twelve wide column">
+    <h1 class="ui header">{{ offer.title }}</h1>
+    <h3 class="ui header">Fach: {{ offer.subject }}</h3>
+    <div class="ui grid">
+      <div class="sixteen wide column">
+        <h3 class="ui header">Beschreibung</h3> {{offer?.description }}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="ui divider"></div>
+<div class="ui divider"></div>
+<div class="content">
+  <h2>verfügbare Termine:</h2>
+  <div class="ui horizontal segments">
+    <div *ngFor="let appointment of offer.appointments">
+      <div *ngIf="!appointment.user_id">
+        <div class="ui segment">
+          <h3 class="ui header">Datum: {{appointment.date}}</h3>
+          <h3 class="ui header">Zeit: {{appointment.time}}</h3>
+          <p><i>Termine dauern in der Regel 1,5 Stunden!</i></p>
+          <button class="ui tiny violet labeled icon button" (click)="bookAppointment(appointment)">
+            <i class="calendar plus outline icon"></i> Termin jetzt verbindlich buchen
+          </button>
+          <!--<button class="ui tiny violet labeled icon button" (click)="removeAppointment()" >
+            <i class="calendar plus outline icon"></i> Termin löschen
+          </button>-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div>
+  <button class="ui tiny red labeled icon button" (click)="removeOffer()">
+    <i class="remove icon"></i> Angebot löschen
+  </button>
+  <button class="ui tiny yellow labeled icon button" [routerLink]="['../../admin', offer?.id]">
+    <i class="write icon"></i> Angebot bearbeiten
+  </button>
+  <button [routerLink]="'/offers'" class="ui violet button">
+    Zurück zur Nachhilfeliste
+  </button>
+
+  <!--<form class="ui form-group large form"> &lt;!&ndash;[formGroup]="commentForm" (ngSubmit)="submitForm()"&ndash;&gt;
+  <h3>Nicht der richtige Termin dabei? Dann schreib hier eine Nachricht:</h3>
+    <div class="field">
+      <label>Nachricht</label>
+      <textarea formControlName="description" rows="3"></textarea>
+    </div>
+  </form>-->
+
+  <div class="content">
+    <h2>Kommentare:</h2>
+    <div class="ui horizontal segments">
+      <div *ngFor="let comment of offer.comments">
+        <div class="ui segment">
+          <h3 class="ui header">Datum: {{comment.title}}</h3>
+          <p class="ui header">Zeit: {{comment.commenttext}}</p>
+          <p><i>Termine dauern in der Regel 1,5 Stunden!</i></p>
+          <!--<button class="ui tiny violet labeled icon button" (click)="removeAppointment()" >
+            <i class="calendar plus outline icon"></i> Termin löschen
+          </button>-->
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
