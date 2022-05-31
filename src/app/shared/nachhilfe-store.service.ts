@@ -3,6 +3,8 @@ import {Offer} from "./offer";
 import {HttpClient} from "@angular/common/http";
 import {catchError, Observable, retry, throwError} from "rxjs";
 import {Appointment} from "./appointment";
+import {Comment} from "./comment";
+import {User} from "./user";
 
 @Injectable()
 export class NachhilfeStoreService {
@@ -58,9 +60,32 @@ export class NachhilfeStoreService {
 
   //book Appointment
   bookAppointment(appointment: Appointment): Observable<any> {
-    return this.http.put(`${this.api}/appointments/update/${appointment.id}`, appointment)
+    return this.http.put(`${this.api}/appointments/book/${appointment.id}`, appointment)
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
-// test comment
+  //termin löschen
+  removeAppointment(appointment: Appointment):Observable<any>{
+    return this.http.delete(`${this.api}/appointments/delete/${appointment.id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  //create Comment
+  createComment(comment: Comment): Observable<any> {
+    return this.http.post(`${this.api}/comments`, comment)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+  //return all Users
+  getAllUsers(): Observable<Array<User>> {
+    return this.http.get<Array<User>>(`${this.api}/users`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+  //return one User
+  getSingleUser(id: number): Observable<User> {
+    return this.http.get<User>(`${this.api}/users/${id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
 }
+
+

@@ -1,0 +1,17 @@
+<p>user works!</p>
+<div class="content">
+  <h3 class="ui block header">
+    Willkommen {{user.name}}!
+  </h3>
+  <div class="description"> {{user?.email}} </div>
+  <div class="metadata">
+    <div class="description">{{user?.telnumber}}
+    </div>
+  </div>
+  <h3 *ngIf="user.role" >Deine angelegten Angebote:</h3>
+  <h3 *ngIf="!user.role">Deine gebuchten Termine:</h3>
+
+  <!--<a *ngFor="let offer of offers" class="item bs-offer-list-item" [offer]="offer" [routerLink]="offer.id.toString()">
+
+  </a>-->
+</div>

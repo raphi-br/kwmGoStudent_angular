@@ -40,7 +40,6 @@ export class OfferFormComponent implements OnInit {
       });
     }
     this.initOffer();
-
     console.log(this.appointments);
   }
 
@@ -61,7 +60,6 @@ export class OfferFormComponent implements OnInit {
     const offer: Offer = NachhilfeFactory.fromObject(this.offerForm.value);
     console.log(offer);
     if (this.isUpdatingOffer) {
-      console.log(offer + "submit-if");
       this.bs.update(offer).subscribe(res => {
         this.router.navigate(["../../offers", offer.id],
           {
@@ -70,8 +68,6 @@ export class OfferFormComponent implements OnInit {
       });
     } else {
       offer.user_id = 1;// just for testing
-      console.log("Offer: else" );
-      console.log(offer);
       this.bs.create(offer).subscribe(res => {
         this.offer = NachhilfeFactory.empty();
         this.offerForm.reset(NachhilfeFactory.empty());
@@ -103,13 +99,11 @@ export class OfferFormComponent implements OnInit {
     if (this.offer.appointments) {
       this.appointments = this.fb.array([]);
       for (let app of this.offer.appointments) {
-        console.log("line 108");
         let fg = this.fb.group({
           id: new FormControl(app.id),
           date: new FormControl(app.date, [Validators.required]),
           time: new FormControl((app.time), [Validators.required])
         });
-        console.log("114");
         console.log(app.date, app.time);
         this.appointments.push(fg);
       }

@@ -23,9 +23,9 @@
           <button class="ui tiny violet labeled icon button" (click)="bookAppointment(appointment)">
             <i class="calendar plus outline icon"></i> Termin jetzt verbindlich buchen
           </button>
-          <!--<button class="ui tiny violet labeled icon button" (click)="removeAppointment()" >
+          <button class="ui tiny violet labeled icon button" (click)="removeAppointment(appointment)" >
             <i class="calendar plus outline icon"></i> Termin löschen
-          </button>-->
+          </button>
         </div>
       </div>
     </div>
@@ -43,29 +43,41 @@
     Zurück zur Nachhilfeliste
   </button>
 
-  <!--<form class="ui form-group large form"> &lt;!&ndash;[formGroup]="commentForm" (ngSubmit)="submitForm()"&ndash;&gt;
   <h3>Nicht der richtige Termin dabei? Dann schreib hier eine Nachricht:</h3>
+  <form class="ui form-group large form" [formGroup]="commentForm" (ngSubmit)="submitComment()">
+    <div class="field">
+      <label>Titel</label>
+      <input formControlName="title">
+    </div>
     <div class="field">
       <label>Nachricht</label>
-      <textarea formControlName="description" rows="3"></textarea>
+      <textarea formControlName="commenttext" rows="3"></textarea>
     </div>
-  </form>-->
+    <button type="submit" class="ui button">Speichern</button>
+  </form>
+
 
   <div class="content">
-    <h2>Kommentare:</h2>
-    <div class="ui horizontal segments">
+      <div class="ui comments">
+        <h3 class="ui dividing header">Kommentare: </h3>
       <div *ngFor="let comment of offer.comments">
-        <div class="ui segment">
-          <h3 class="ui header">Datum: {{comment.title}}</h3>
-          <p class="ui header">Zeit: {{comment.commenttext}}</p>
-          <p><i>Termine dauern in der Regel 1,5 Stunden!</i></p>
-          <!--<button class="ui tiny violet labeled icon button" (click)="removeAppointment()" >
-            <i class="calendar plus outline icon"></i> Termin löschen
-          </button>-->
+        <div class="comment">
+          <a class="avatar">
+            <img src="../../assets/woman.png">
+          </a>
+          <div class="content">
+            <a class="author">{{comment.user_id}}</a>
+            <div class="metadata">
+              <span class="date">{{comment.created_at}}</span>
+            </div>
+            <div class="text">
+              {{comment.commenttext}}
+            </div>
+          </div>
         </div>
+        <div class="ui divider"></div>
       </div>
-    </div>
-
+      </div>
+      </div>
   </div>
-</div>
 

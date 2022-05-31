@@ -33,7 +33,6 @@ export class AuthenticationService {
   public isLoggedIn() {
     if (sessionStorage.getItem("token")) {
       let token: string = <string>sessionStorage.getItem("token");
-      console.log(jwt_decode(token));
       const decodedToken = jwt_decode(token) as Token;
       let expirationDate: Date = new Date(0);
       expirationDate.setUTCSeconds(decodedToken.exp);
@@ -52,20 +51,16 @@ export class AuthenticationService {
     return!this.isLoggedIn();
   }
 
-
   public getCurrentUserId() {
     return Number.parseInt(<string>sessionStorage.getItem("userId"));
   }
 
   public setSessionStorage(token: string)
   {
-    console.log("storing token");
-    console.log(jwt_decode(token));
     const decodedToken = jwt_decode(token) as Token;
-    console.log(decodedToken);
-    console.log(decodedToken.user.id);
     sessionStorage.setItem("token", token);
     sessionStorage.setItem("userId", decodedToken.user.id);
+
 
   }
 }

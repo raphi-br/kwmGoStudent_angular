@@ -18,6 +18,9 @@ import { LoginComponent } from './login/login.component';
 import {AuthenticationService} from "./shared/authentication.service";
 import {DatePipe, registerLocaleData} from "@angular/common";
 import localeDE from '@angular/common/locales/de';
+import { UserComponent } from './user/user.component';
+import {UserService} from "./shared/user.service";
+import {TokenInterceptorService} from "./shared/token-interceptor.service";
 
 registerLocaleData(localeDE);
 /*
@@ -34,6 +37,7 @@ import { ProfileComponent } from './profile/profile.component';
     SearchComponent,
     OfferFormComponent,
     LoginComponent,
+    UserComponent,
     /*ProfileComponent*/
   ],
   imports: [
@@ -44,9 +48,11 @@ import { ProfileComponent } from './profile/profile.component';
     ToastrModule.forRoot(),  //notifications toastr module added
     ReactiveFormsModule //Import of Form
   ],
-  providers: [NachhilfeStoreService, AuthenticationService, DatePipe,
+  providers: [NachhilfeStoreService, AuthenticationService, DatePipe, UserService,
     {
     provide: LOCALE_ID,
+      useClass: TokenInterceptorService,
+      multi:true,
     useValue: 'de'
   }],
   bootstrap: [AppComponent]

@@ -1,8 +1,8 @@
 
 
 
-<div class="ui middle aligned selection divided list">
-  <a *ngFor="let offer of offers" class="item bs-offer-list-item"
+<div class="cards">
+  <a *ngFor="let offer of offers" class="bs-offer-list-item"
      [offer]="offer"
      [routerLink]="offer.id.toString()"></a>
   <div *ngIf="!offers" class="ui active dimmer">

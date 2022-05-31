@@ -5,20 +5,23 @@ import {OfferListComponent} from "./offer-list/offer-list.component";
 import {OfferDetailsComponent} from "./offer-details/offer-details.component";
 import {OfferFormComponent} from "./offer-form/offer-form.component";
 import {LoginComponent} from "./login/login.component";
+import {UserComponent} from "./user/user.component";
+import {CanNavigateToAdminGuard} from "./can-navigate-to-admin.guard";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'offers', component: OfferListComponent},
   {path: 'offers/:id', component: OfferDetailsComponent},
-  {path: 'admin', component: OfferFormComponent},
-  {path: 'admin/:id', component: OfferFormComponent},
-  {path: 'login', component: LoginComponent}
+  {path: 'admin', canActivate:[CanNavigateToAdminGuard], component: OfferFormComponent},
+  {path: 'admin/:id', canActivate:[CanNavigateToAdminGuard], component: OfferFormComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'profile', component: UserComponent}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: []
+  providers: [CanNavigateToAdminGuard]
 })
 export class AppRoutingModule { }
