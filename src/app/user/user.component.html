@@ -1,4 +1,4 @@
-<p>user works!</p>
+<div class="ui container">
 <div class="content">
   <h3 class="ui block header">
     Willkommen {{user.name}}!
@@ -11,7 +11,38 @@
   <h3 *ngIf="user.role" >Deine angelegten Angebote:</h3>
   <h3 *ngIf="!user.role">Deine gebuchten Termine:</h3>
 
-  <!--<a *ngFor="let offer of offers" class="item bs-offer-list-item" [offer]="offer" [routerLink]="offer.id.toString()">
+  <div *ngFor="let offer of offers" >
+    <a *ngIf="offer.user_id == getCurrentUserId() " class="item bs-offer-list-item"  [offer]="offer" [routerLink]="offer.id.toString()">
+    <div class="card card-3">
+      <div class="card__icon"><i class="fas fa-bolt"></i></div>
+      <p class="card__exit"><i class="fas fa-times"></i></p>
+      <h2 class="card__title">{{offer?.title}} ({{offer?.subject}})</h2>
+      <p>{{offer?.description}}</p>
+    </div>
+    </a>
+  </div>
 
-  </a>-->
+  <div  *ngIf="user.role===0">
+  <div *ngFor="let appointment of appointments">
+    <a  [routerLink]="appointment.offer_id.toString()">
+    <div class="card card-3">
+        <h3 class="ui header">Datum: {{appointment.date}}</h3>
+        <h3 class="ui header">Zeit: {{appointment.time}}</h3>
+        <p><i>Termine dauern in der Regel 1,5 Stunden!</i></p>
+    </div>
+      </a>
+  </div>
+  </div>
+
+
+   <!-- <a *ngFor="let appointment of getBookedItems()" [routerLink]="appointment.offer_id.toString()">
+      <div class="ui segment">
+        <h3 class="ui header">Datum: {{appointment.date}}</h3>
+        <h3 class="ui header">Zeit: {{appointment.time}}</h3>
+        <p><i>Termine dauern in der Regel 1,5 Stunden!</i></p>
+      </div>
+    </a>-->
+
+
+</div>
 </div>

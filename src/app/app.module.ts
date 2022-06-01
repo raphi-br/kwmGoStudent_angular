@@ -1,6 +1,6 @@
 import {LOCALE_ID, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { OfferListComponent } from './offer-list/offer-list.component';
@@ -23,9 +23,6 @@ import {UserService} from "./shared/user.service";
 import {TokenInterceptorService} from "./shared/token-interceptor.service";
 
 registerLocaleData(localeDE);
-/*
-import { ProfileComponent } from './profile/profile.component';
-*/
 
 @NgModule({
   declarations: [
@@ -38,7 +35,6 @@ import { ProfileComponent } from './profile/profile.component';
     OfferFormComponent,
     LoginComponent,
     UserComponent,
-    /*ProfileComponent*/
   ],
   imports: [
     BrowserModule,
@@ -54,7 +50,11 @@ import { ProfileComponent } from './profile/profile.component';
       useClass: TokenInterceptorService,
       multi:true,
     useValue: 'de'
-  }],
+  },
+    {
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

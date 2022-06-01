@@ -86,6 +86,12 @@ export class NachhilfeStoreService {
     return this.http.get<User>(`${this.api}/users/${id}`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
+
+  //Appointments of User
+  getUserAppointments(userId: string): Observable<Array<Appointment>>{
+  return this.http.get<Array<Appointment>>(`${this.api}/appointments/${userId}`)
+    .pipe(retry(3)).pipe(catchError(this.errorHandler))}
+
 }
 
 

@@ -1,3 +1,4 @@
+<div class="ui container">
 <div class="ui grid" *ngIf="offer">
   <div class="twelve wide column">
     <h1 class="ui header">{{ offer.title }}</h1>
@@ -15,36 +16,37 @@
   <h2>verfügbare Termine:</h2>
   <div class="ui horizontal segments">
     <div *ngFor="let appointment of offer.appointments">
-      <div *ngIf="!appointment.user_id">
+
         <div class="ui segment">
           <h3 class="ui header">Datum: {{appointment.date}}</h3>
           <h3 class="ui header">Zeit: {{appointment.time}}</h3>
           <p><i>Termine dauern in der Regel 1,5 Stunden!</i></p>
-          <button class="ui tiny violet labeled icon button" (click)="bookAppointment(appointment)">
+          <p *ngIf="appointment.user_id != null"><b>:( Dieser Termin wurde bereits gebucht ):</b></p>
+          <div *ngIf="authService.isLoggedIn() && user.role === 0">
+          <button [ngClass]="{'disabled':appointment.user_id != null}" class="ui tiny red labeled icon button" (click)="bookAppointment(appointment)">
             <i class="calendar plus outline icon"></i> Termin jetzt verbindlich buchen
           </button>
-          <button class="ui tiny violet labeled icon button" (click)="removeAppointment(appointment)" >
+          </div>
+          <button *ngIf="authService.isLoggedIn() && user.role === 1" class="ui tiny red labeled icon button" (click)="removeAppointment(appointment)" >
             <i class="calendar plus outline icon"></i> Termin löschen
           </button>
         </div>
-      </div>
     </div>
   </div>
-
 </div>
 <div>
-  <button class="ui tiny red labeled icon button" (click)="removeOffer()">
+  <button *ngIf="authService.isLoggedIn() && user.role === 1" class="ui tiny red labeled icon button" (click)="removeOffer()">
     <i class="remove icon"></i> Angebot löschen
   </button>
-  <button class="ui tiny yellow labeled icon button" [routerLink]="['../../admin', offer?.id]">
-    <i class="write icon"></i> Angebot bearbeiten
+  <button *ngIf="authService.isLoggedIn() && user.role === 1" class="ui tiny yellow labeled icon button" [routerLink]="['../../admin', offer?.id]">
+    <i class="write icon"></i> Angebot bearbeiten {{user.role}}
   </button>
   <button [routerLink]="'/offers'" class="ui violet button">
     Zurück zur Nachhilfeliste
   </button>
 
-  <h3>Nicht der richtige Termin dabei? Dann schreib hier eine Nachricht:</h3>
-  <form class="ui form-group large form" [formGroup]="commentForm" (ngSubmit)="submitComment()">
+  <form *ngIf="authService.isLoggedIn()" class="ui form-group large form" [formGroup]="commentForm" (ngSubmit)="submitComment()">
+    <h3>Nicht der richtige Termin dabei? Dann schreib hier eine Nachricht:</h3>
     <div class="field">
       <label>Titel</label>
       <input formControlName="title">
@@ -53,7 +55,7 @@
       <label>Nachricht</label>
       <textarea formControlName="commenttext" rows="3"></textarea>
     </div>
-    <button type="submit" class="ui button">Speichern</button>
+    <button type="submit" class="ui button">Ansenden</button>
   </form>
 
 
@@ -66,9 +68,13 @@
             <img src="../../assets/woman.png">
           </a>
           <div class="content">
-            <a class="author">{{comment.user_id}}</a>
+
+            <!--<pre>{{getUser(comment.user_id)|json}}</pre>-->
+            <pre>{{comment.user_id|json}}</pre>
+
+            <a class="author">{{getUser(comment.user_id)}}</a>
             <div class="metadata">
-              <span class="date">{{comment.created_at}}</span>
+              <span class="date">{{renderDate(comment.created_at)}}</span>
             </div>
             <div class="text">
               {{comment.commenttext}}
@@ -81,3 +87,4 @@
       </div>
   </div>
 
+</div>

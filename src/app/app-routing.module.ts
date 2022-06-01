@@ -16,7 +16,8 @@ const routes: Routes = [
   {path: 'admin', canActivate:[CanNavigateToAdminGuard], component: OfferFormComponent},
   {path: 'admin/:id', canActivate:[CanNavigateToAdminGuard], component: OfferFormComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'profile', component: UserComponent}
+  {path: 'profile', component: UserComponent},
+  {path: 'profile/:id', component: OfferDetailsComponent},
 ];
 
 @NgModule({

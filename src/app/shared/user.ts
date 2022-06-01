@@ -5,7 +5,7 @@ export class User {
               public email: string,
               public password:string,
               public telnumber:string,
-              public role:boolean){
+              public role:number){
 
 
   }

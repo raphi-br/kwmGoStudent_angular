@@ -2,12 +2,11 @@ import {catchError, Observable, retry, throwError} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {User} from "./user";
 import {Injectable} from "@angular/core";
-
-
-
+import {UserFactory} from "./user-factory";
 @Injectable()
-
 export class UserService {
+
+  user: User = UserFactory.empty();
 
   private api = 'http://nachhilfe.s1910456002.student.kwmhgb.at/api';
 
@@ -19,10 +18,10 @@ export class UserService {
     return throwError(error);
   }
 
-
   getSingleUser(id: number): Observable<User> {
     return this.http.get<User>(`${this.api}/users/${id}`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
+
 
 }
